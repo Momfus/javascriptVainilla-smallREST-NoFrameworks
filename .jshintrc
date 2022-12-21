@@ -1,0 +1,6 @@
+
+{
+   "predef": ["document", "console"],
+   "esversion": 11,
+   "module": true
+}
