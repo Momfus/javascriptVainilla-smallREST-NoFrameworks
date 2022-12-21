@@ -1,9 +1,10 @@
 import { localhostUserToModel } from "../mappers/localhost-user.mapper";
+import { User } from "../models/user";
 
 /**
  * 
  * @param {Number} page 
- * @return
+ * @return {Promise<User[]>}
  */
 export const loadUsersByPage = async ( page = 1) => {
 
@@ -11,7 +12,7 @@ export const loadUsersByPage = async ( page = 1) => {
    const res = await fetch(url);
    const data = await res.json();
 
-   const user = data.map( userLike => localhostUserToModel(userLike) );
+   const users = data.map( userLike => localhostUserToModel(userLike) );
 
-   console.log(user);
+   return users;
 };

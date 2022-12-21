@@ -7,7 +7,17 @@ const state = {
 
 // Methods
 const loadingNextPage = async() => {
-   await loadUsersByPage(state.currentPage++);
+   const users = await loadUsersByPage(state.currentPage++);
+
+   if( users === 0) { // No charge next page if there no more users in that one
+      return;
+   }
+
+   state.currentPage += 1;
+   state.users = users;
+
+   
+
 };
 
 const loadPreviousPage = async() => {
@@ -30,6 +40,6 @@ export default {
    reloadPage,
 
    // Small helpers to export
-   getUser: () => [...state.users], // Get all data in the array
+   getUsers: () => [...state.users], // Get all data in the array
    getCurrentPage: () => state.currentPage,
 };

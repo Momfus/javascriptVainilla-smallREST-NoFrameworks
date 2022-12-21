@@ -9,5 +9,6 @@ export const appComponent = async (element) => {
    element.innerHTML = 'Loading...';
    await usersStore.loadingNextPage();
 
+   console.log( usersStore.getUsers() );
 };
 
