@@ -1,7 +1,13 @@
+import usersStore from "./store/users-store";
 
-export const appComponent = () => {
+/**
+ * 
+ * @param {HTMLDivElement} element 
+ */
+export const appComponent = async (element) => {
 
-   console.log('appComponent');
+   element.innerHTML = 'Loading...';
+   await usersStore.loadingNextPage();
 
 };
 
