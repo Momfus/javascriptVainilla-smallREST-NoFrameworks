@@ -1,6 +1,6 @@
 
 {
-   "predef": ["document", "console", "FormData"],
+   "predef": true,
    "esversion": 11,
    "module": true
 }
