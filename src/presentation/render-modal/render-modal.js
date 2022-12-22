@@ -1,12 +1,24 @@
 
 import modalHtml from './render-modal.html?raw'; // The raw properties is one thing that Vite ask for a html import
 import './render-modal.css';
+import { User } from '../../models/user';
+import { getUserById } from '../../use-cases/get-user-by-id';
 
 let modal, form; // HTML elements
+let loadedUser = {};
 
-export const showModal = () => {
+/**
+ * 
+ * @param {String | Number} id 
+ */
+export const showModal = async ( id ) => {
    
    modal?.classList.remove('hide-modal');
+   loadedUser = {};
+
+   if( !id ) return;
+   const user = await getUserById( id );
+   setFormValue(user);
 
 };
 
@@ -16,6 +28,20 @@ export const hideModal = () => {
    form?.reset();
 
 };
+
+/**
+ * 
+ * @param {User} user 
+ */
+const setFormValue = ( user ) => {
+   form.querySelector('[name="firstName"]').value = user.firstName;
+   form.querySelector('[name="lastName"]').value = user.lastName;
+   form.querySelector('[name="balance"]').value = user.balance;
+   form.querySelector('[name="isActive"]').checked = user.isActive;
+
+   loadedUser = user;
+}
+
 
 /**
  * 
@@ -44,7 +70,7 @@ export const renderModal = (element, callback) => {
       event.preventDefault();  // Remove the propagation for default in the event when user select "submit"
 
       const formData = new FormData( form ); 
-      const userLike = {};
+      const userLike = {...loadedUser};
 
       for( const [key, value] of formData) {
          
