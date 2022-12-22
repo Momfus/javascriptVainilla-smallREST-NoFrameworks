@@ -89,6 +89,13 @@
       "first_name": "Lizzie",
       "last_name": "Morin",
       "gender": "female"
+    },
+    {
+      "balance": 1231,
+      "first_name": "asda",
+      "isActive": true,
+      "last_name": "ada",
+      "id": 30
     }
   ]
 }

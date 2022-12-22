@@ -18,10 +18,11 @@ export const appComponent = async (element) => {
    renderTable( element );
    renderButtons( element );
    renderAddButton( element );
+   
    renderModal( element,  async( userLike ) => {
       const user = await saveUser( userLike );
       usersStore.onUserChange( user );
-      renderTable();
+      renderTable(); // When the table is already created, there is no need to sent an element
    });
 
 };

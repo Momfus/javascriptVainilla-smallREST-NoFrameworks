@@ -23,7 +23,7 @@ export const userModelToLocalHost = ( user ) => {
       gender,
       id,
       isActive,
-      lastName: lastName
+      last_name: lastName
    }
 
 }

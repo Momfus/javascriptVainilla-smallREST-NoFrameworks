@@ -71,7 +71,7 @@ export const renderModal = (element, callback) => {
 
       const formData = new FormData( form ); 
       const userLike = {...loadedUser};
-
+      
       for( const [key, value] of formData) {
          
          if( key === 'balance') {
@@ -79,14 +79,12 @@ export const renderModal = (element, callback) => {
             continue;
          }
 
-         if( key === 'isActive') {
-            userLike[key] = (value === 'on') ? true : false;
-            continue;
-         }
-
          userLike[key] = value;
 
       }
+
+      // This need to be added manually because the check field disappear from the form when is unchecked
+      userLike['isActive'] = ( formData.get('isActive') ) ? true : false;
 
       // console.log(userLike);
 

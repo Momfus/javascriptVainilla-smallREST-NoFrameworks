@@ -1,5 +1,6 @@
 //User creation and update
 
+import { localhostUserToModel } from "../mappers/localhost-user.mapper";
 import { userModelToLocalHost } from "../mappers/user-to-localhost.mapper";
 import { User } from "../models/user";
 
@@ -18,13 +19,16 @@ export const saveUser = async ( userLike ) => {
    }
 
    const userToSave = userModelToLocalHost(user);
+   let userUpdated;
 
    if( user.id) {
-      throw 'No implementada la actualización'; // return;
+      userUpdated =  await updateUser(userToSave);
+   } else {
+      userUpdated = await createUser( userToSave );
    }
 
-   const updatedUser = await createUser( userToSave );
-   return updatedUser;
+   // Map the data as is expected in the backend (example case)
+   return localhostUserToModel( userUpdated );
 
 };
 
@@ -47,5 +51,41 @@ const createUser = async ( user ) => {
 
    return newUser;
 
+
+};
+
+/**
+ * @param {Like<User>} user
+ */
+const updateUser = async ( user ) => {
+
+   const url = `${ import.meta.env.VITE_BASE_URL }/users/${ user.id }`;
+   const res = await fetch(url, {
+      method: 'PATCH',
+      body: JSON.stringify(user),
+      headers: {
+         'Content-Type': 'application/json'
+      }
+   });
+
+   const updatedUser = await res.json();
+   console.log({ updatedUser });
+
+   return updatedUser;
+
+
+};
+
+/**
+ * @param {String|Number} user
+ */
+export const deleteUserById = async ( id ) => {
+
+   const url = `${ import.meta.env.VITE_BASE_URL }/users/${ id }`;
+   await fetch(url, {
+      method: 'DELETE'
+   });
+
+   return true;
 
 };
