@@ -7,10 +7,10 @@ const state = {
 };
 
 // Methods
-const loadingNextPage = async() => {
-   const users = await loadUsersByPage(state.currentPage++);
+const loadNextPage = async() => {
+   const users = await loadUsersByPage(state.currentPage + 1);
 
-   if( users === 0) { // No charge next page if there no more users in that one
+   if( users.length === 0) { // No charge next page if there no more users in that one
       return;
    }
 
@@ -22,7 +22,16 @@ const loadingNextPage = async() => {
 };
 
 const loadPreviousPage = async() => {
-   throw new Error('No implemented');
+   
+   if( state.currentPage === 1 ) {
+      return;
+   }
+
+   state.currentPage -= 1;
+
+   const users = await loadUsersByPage(state.currentPage);
+   state.users = users;
+
 };
 
 const onUserChange = () => {
@@ -35,7 +44,7 @@ const reloadPage = () => {
 
 
 export default {
-   loadingNextPage,
+   loadNextPage,
    loadPreviousPage,
    onUserChange,
    reloadPage,
